@@ -1,0 +1,21 @@
+page {
+  background: #f7f6f1;
+  color: #303a30;
+  font-family: system-ui, sans-serif;
+}
+button {
+  font-size: 25rpx;
+}
+button::after {
+  border: 0;
+}
+button[disabled] {
+  opacity: 0.5;
+}
+textarea,
+input {
+  box-sizing: border-box;
+}
+button:active {
+  opacity: 0.8;
+}

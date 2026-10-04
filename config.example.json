@@ -1,0 +1,14 @@
+{
+  "host": "127.0.0.1",
+  "port": 8791,
+  "web_root": "dist/web",
+  "asset_dir": ".local/assets",
+  "text": {
+    "provider": "claude-cli",
+    "executable": "claude",
+    "model": "sonnet",
+    "timeout": 150
+  },
+  "images": { "provider": "commons", "timeout": 20, "limit": 8 },
+  "generation": null
+}

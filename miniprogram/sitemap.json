@@ -1,0 +1,4 @@
+{
+  "desc": "InkMuse private creation workspace",
+  "rules": [{ "action": "disallow", "page": "*" }]
+}

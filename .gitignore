@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.local/
+__pycache__/
+*.pyc
+test-results/
+playwright-report/
+project.private.config.json
+*.local.json

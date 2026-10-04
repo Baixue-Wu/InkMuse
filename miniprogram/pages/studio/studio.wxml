@@ -1,0 +1,174 @@
+<view class="screen">
+  <view class="top"
+    ><text class="logo">InkMuse.</text
+    ><button class="text-button" bindtap="restore">我的草稿</button></view
+  >
+  <view class="eyebrow">YOUR WORDS, BEAUTIFULLY TOLD</view
+  ><view class="headline">好文字，值得被看见。</view
+  ><view class="subtitle">写下你的想法，剩下的交给灵感。</view>
+  <view class="panel compose"
+    ><view class="heading"
+      ><text>01　从你的文字开始</text
+      ><text class="counter">{{source.length}} 字</text></view
+    ><textarea
+      class="source"
+      value="{{source}}"
+      maxlength="12000"
+      bindinput="sourceInput"
+      placeholder="粘贴你的文字、笔记或故事…"
+    /><view class="samples"
+      ><text>试试灵感</text
+      ><button data-key="slow" bindtap="sample">生活随笔</button
+      ><button data-key="plant" bindtap="sample">实用分享</button
+      ><button data-key="city" bindtap="sample">旅行记录</button></view
+    >
+    <view class="heading spaced">02　你想要的感觉</view
+    ><scroll-view class="moods" scroll-x
+      ><button
+        wx:for="{{moods}}"
+        wx:key="key"
+        class="mood {{mood === item.key ? 'chosen' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="moodChange"
+      >
+        {{item.label}}
+      </button></scroll-view
+    >
+    <view class="option"
+      ><text>自动搜索配图</text
+      ><switch
+        checked="{{pictures}}"
+        color="#526d49"
+        bindchange="picturesChange" /></view
+    ><view class="option"
+      ><text>允许润色与压缩</text
+      ><switch checked="{{polish}}" color="#526d49" bindchange="polishChange"
+    /></view>
+    <button
+      class="primary"
+      loading="{{busy}}"
+      disabled="{{busy}}"
+      bindtap="generate"
+    >
+      ✳　生成我的图文　↗</button
+    ><view class="status" wx:if="{{message}}">{{message}}</view>
+  </view>
+  <view class="panel preview"
+    ><view class="heading"
+      ><text>作品预览</text
+      ><text class="counter"
+        >{{origin === 'sample' ? '内置示例' : '我的作品'}}</text
+      ><button class="text-button" bindtap="saveDraft">保存草稿</button></view
+    ><view class="note">{{note}}</view
+    ><canvas
+      type="2d"
+      id="art"
+      class="art"
+      style="height:{{canvasHeight}}px"
+    /><view class="page-nav"
+      ><button disabled="{{selected === 0}}" data-step="-1" bindtap="navigate">
+        ←</button
+      ><text>{{selected + 1}} / {{pageCount}}</text
+      ><button
+        disabled="{{selected === pageCount - 1}}"
+        data-step="1"
+        bindtap="navigate"
+      >
+        →
+      </button></view
+    >
+    <view class="toolbar"
+      ><button bindtap="toggleEditor">
+        {{editing ? '收起编辑' : '编辑这一页'}}</button
+      ><button bindtap="saveImage">保存此页</button
+      ><button bindtap="saveAll" disabled="{{saving}}">
+        {{saving ? '保存中…' : '保存全部'}}
+      </button></view
+    >
+    <view class="editor" wx:if="{{editing}}"
+      ><text class="field-label">标题</text
+      ><input
+        class="field"
+        value="{{pageTitle}}"
+        bindinput="titleInput"
+        maxlength="120"
+      /><text class="field-label">正文</text
+      ><textarea
+        class="field body"
+        value="{{pageBody}}"
+        bindinput="bodyInput"
+        maxlength="12000"
+      /><button class="apply" bindtap="applyText">应用文字修改</button
+      ><picker
+        range="{{layoutNames}}"
+        value="{{layoutIndex}}"
+        bindchange="layoutChange"
+        ><view class="field"
+          >页面构图：{{layoutNames[layoutIndex]}}　⌄</view
+        ></picker
+      ><view class="toolbar"
+        ><button bindtap="openImages">搜索 / 生成配图</button
+        ><button bindtap="uploadImage">上传图片</button></view
+      ><view class="toolbar"
+        ><button
+          data-step="-1"
+          bindtap="movePage"
+          disabled="{{selected === 0}}"
+        >
+          前移</button
+        ><button
+          data-step="1"
+          bindtap="movePage"
+          disabled="{{selected === pageCount - 1}}"
+        >
+          后移</button
+        ><button bindtap="undo" disabled="{{!canUndo}}">撤销</button></view
+      ><view class="credit" wx:if="{{credit}}">{{credit}}</view
+      ><button wx:if="{{credit}}" bindtap="copyCredit" class="text-button">
+        复制来源信息
+      </button></view
+    >
+  </view>
+  <view class="footer">InkMuse · Crafted by Baixue</view>
+  <view class="overlay" wx:if="{{imageDialog}}"
+    ><view class="sheet"
+      ><view class="heading"
+        ><text>给文字，找一个画面</text
+        ><button class="text-button" bindtap="closeImages">关闭</button></view
+      ><view class="toolbar"
+        ><button data-mode="search" bindtap="imageModeChange">
+          搜索真实图片</button
+        ><button data-mode="generate" bindtap="imageModeChange">
+          生成创意配图
+        </button></view
+      ><input
+        class="field"
+        value="{{query}}"
+        bindinput="queryInput"
+        placeholder="描述你希望看到的画面"
+      /><button
+        class="primary"
+        bindtap="findImages"
+        loading="{{imageBusy}}"
+        disabled="{{imageBusy}}"
+      >
+        {{imageMode === 'search' ? '搜索配图' : '生成配图'}}</button
+      ><view class="note">{{imageMessage}}</view
+      ><scroll-view scroll-y class="results"
+        ><view
+          wx:for="{{candidates}}"
+          wx:key="id"
+          class="result"
+          data-id="{{item.id}}"
+          bindtap="selectImage"
+          ><image src="{{item.preview}}" mode="aspectFill" /><view
+            class="result-info"
+            >{{item.title}}<view class="credit"
+              >{{item.credit}} · {{item.license}}</view
+            ></view
+          ></view
+        ></scroll-view
+      ></view
+    ></view
+  >
+</view>
