@@ -2,6 +2,7 @@
 "use strict";
 const $ = (id) => document.getElementById(id);
 const Core = InkMuse;
+const demo = window.InkMuseBuild?.demo === true;
 const canvas = $("main-canvas");
 const context = canvas.getContext("2d");
 const storageKey = "inkmuse.workspace.v1";
@@ -77,6 +78,7 @@ function mutate(fn) {
   }
 }
 async function api(path, body) {
+  if (demo) throw new Error("公开演示版不连接 AI 服务。请体验内置样例、编辑、上传配图和导出。");
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 210000);
   try {
@@ -602,6 +604,7 @@ function imageTab(mode) {
       : "描述想要的插画或氛围。生成图用于视觉表达，不能代替真实地点或事件的照片。";
   $("image-results").replaceChildren();
   $("image-status").textContent = "";
+  if (demo) $("image-note").textContent = "公开演示版支持上传自己的图片；在线搜索与 AI 配图未开放。";
 }
 $("image-button").onclick = () => {
   imagePageId = doc.pages[selected].id;
@@ -691,7 +694,15 @@ setMood(mood, false);
 updateCount();
 updateDraftCount();
 render();
-api("/api/status")
+if (demo) {
+  document.querySelector(".intro p").textContent = "公开演示版：选择内置样例，修改文字与版式，上传配图并导出。作品保存在当前浏览器。";
+  $("generate").disabled = true;
+  $("generate").textContent = "AI 生成需运行完整版";
+  $("generation-hint").textContent = "从上方三个样例开始体验。AI 润色、图片搜索与生成未开放。";
+  for (const id of ["pictures", "polish", "search-tab", "generation-tab", "image-submit", "image-query"]) {
+    if ($(id)) $(id).disabled = true;
+  }
+} else api("/api/status")
   .then((result) => {
     $("generation-tab").dataset.configured = String(result.generation);
   })

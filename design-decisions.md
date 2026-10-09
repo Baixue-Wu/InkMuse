@@ -9,3 +9,5 @@
 - Keep provider credentials on the server. The local Claude adapter has no tools, no MCP servers, and no persistent design sessions. Image generation is a separate configurable adapter rather than an implied working service without credentials.
 - Build both clients from one portable core and embed its hash in the output manifest. Consumers do not maintain divergent copies of the renderer.
 - Attribute the product, commits and GitHub operations to Baixue. External image attribution and required upstream notices remain intact.
+
+- The public portfolio demo is a static sample editor with editing, local uploads, drafts and export. AI generation and remote image operations are disabled explicitly so visitors need no credentials or backend.

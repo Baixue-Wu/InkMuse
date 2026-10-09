@@ -6,7 +6,7 @@ const crypto = require("node:crypto");
 const args = process.argv.slice(2);
 if (args.includes("--help")) {
   console.log(
-    "Usage: node scripts/build.cjs [--out dist] [--api-base URL] [--appid touristappid]\nBuilds web and native WeChat clients with a shared renderer and source manifest. Default service address comes from config.example.json.",
+    "Usage: node scripts/build.cjs [--out dist] [--demo] [--api-base URL] [--appid touristappid]\nBuilds web and native WeChat clients. --demo builds a browser-only sample editor without service calls.",
   );
 } else {
   const value = (flag, fallback) =>
@@ -32,10 +32,12 @@ if (args.includes("--help")) {
   );
   const core = fs.readFileSync(path.join(root, "core/design.js"));
   const manifest = {
+    demo: args.includes("--demo"),
     version: require("../package.json").version,
     coreSha256: crypto.createHash("sha256").update(core).digest("hex"),
     apiBase,
   };
+  fs.writeFileSync(path.join(out, "web/runtime.js"), `window.InkMuseBuild = ${JSON.stringify(manifest)};\n`);
   for (const target of ["web", "miniprogram"])
     fs.writeFileSync(
       path.join(out, target, "build.json"),

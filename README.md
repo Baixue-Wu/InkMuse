@@ -101,3 +101,7 @@ See [validation and remaining platform checks](docs/validation.md) for the verif
 | `tests/` | Core, provider, HTTP and browser tests |
 
 Moka is a reference for the editable-design workflow. This implementation does not copy its source. See [references](REFERENCES.md) and [design decisions](design-decisions.md).
+
+## Public demo
+
+Build with `npm run build -- --demo`. Serve `dist/web/` as static files. The build manifest explicitly disables all backend requests; samples, editing, local image uploads, drafts and export remain available.
