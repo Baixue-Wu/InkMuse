@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f7f6f1" />
+    <title>InkMuse · 让文字，有画面</title>
+    <link rel="icon" href="icon.svg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a class="brand" href="./" aria-label="InkMuse 首页"
+        ><span class="brand-mark">i<span>✳</span></span
+        ><span>InkMuse<span class="brand-dot">.</span></span></a
+      >
+      <nav>
+        <button class="nav active" id="studio-tab">创作台</button
+        ><button class="nav" id="drafts-button">
+          我的草稿 <span id="draft-count">0</span>
+        </button>
+      </nav>
+      <div class="header-end">
+        <span class="quiet">让文字，有画面</span
+        ><button class="avatar" title="Created by Baixue">B</button>
+      </div>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <div class="eyebrow">
+            <span class="tiny-star">✳</span> YOUR WORDS, BEAUTIFULLY TOLD
+          </div>
+          <h1>好文字，值得<span>被看见。</span></h1>
+          <p>写下你的想法，剩下的交给灵感。</p>
+        </div>
+        <div class="intro-note">
+          <span class="drawn-star">✧</span
+          ><span>一点文字<br />一些意想不到的美好</span>
+        </div>
+      </section>
+      <div class="workspace">
+        <aside class="composer panel">
+          <div class="panel-heading">
+            <h2><span class="step">01</span> 从你的文字开始</h2>
+            <button id="clear-button" class="text-button">清空</button>
+          </div>
+          <div class="input-wrap">
+            <label class="sr-only" for="source">原始文字</label
+            ><textarea
+              id="source"
+              maxlength="12000"
+              placeholder="粘贴一段文字、一篇笔记，或一个已经写好的故事…"
+            ></textarea>
+            <div class="input-footer">
+              <span>每个好想法，都值得好好呈现</span
+              ><span id="char-count">0 字</span>
+            </div>
+          </div>
+          <div class="sample-row">
+            <span>试试灵感</span><button data-sample="slow">生活随笔 ↗</button
+            ><button data-sample="plant">实用分享 ↗</button
+            ><button data-sample="city">旅行记录 ↗</button>
+          </div>
+          <div class="section-line"></div>
+          <div class="panel-heading">
+            <h2><span class="step">02</span> 你想要的感觉</h2>
+            <span class="mini-label">让内容决定设计</span>
+          </div>
+          <div class="mood-grid" id="mood-grid">
+            <button data-mood="auto" class="mood active">
+              <span class="mood-icon">✳</span><strong>交给灵感</strong
+              ><small>根据内容自由设计</small></button
+            ><button data-mood="warm" class="mood">
+              <span class="swatches"
+                ><i style="background: #e9dcc5"></i
+                ><i style="background: #af6549"></i
+                ><i style="background: #757b60"></i></span
+              ><strong>温暖生活</strong><small>柔和 · 松弛</small></button
+            ><button data-mood="nature" class="mood">
+              <span class="swatches"
+                ><i style="background: #cad8bc"></i
+                ><i style="background: #54704e"></i
+                ><i style="background: #ebe9d8"></i></span
+              ><strong>清爽自然</strong><small>呼吸感 · 留白</small></button
+            ><button data-mood="editorial" class="mood">
+              <span class="swatches"
+                ><i style="background: #353736"></i
+                ><i style="background: #ad4939"></i
+                ><i style="background: #dedbd2"></i></span
+              ><strong>杂志叙事</strong><small>克制 · 有层次</small></button
+            ><button data-mood="bold" class="mood">
+              <span class="swatches"
+                ><i style="background: #e7df48"></i
+                ><i style="background: #6452a1"></i
+                ><i style="background: #333632"></i></span
+              ><strong>大胆表达</strong><small>醒目 · 有态度</small>
+            </button>
+          </div>
+          <div class="options">
+            <label
+              ><span><b>自动配图</b><small>根据内容搜索真实图片</small></span
+              ><input
+                id="pictures"
+                type="checkbox"
+                checked
+                role="switch" /></label
+            ><label
+              ><span><b>适度润色</b><small>整理表达，保留你的意思</small></span
+              ><input id="polish" type="checkbox" checked role="switch"
+            /></label>
+          </div>
+          <button id="generate" class="primary generate">
+            <span>✳</span> 生成我的图文 <span>↗</span>
+          </button>
+          <p class="generation-hint" id="generation-hint">
+            设计、配图、排版，一起完成。
+          </p>
+          <div
+            id="status"
+            class="status"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></div>
+        </aside>
+        <section class="preview panel" aria-label="图文编辑器">
+          <div class="preview-top">
+            <div>
+              <span class="live-dot"></span><strong>作品预览</strong
+              ><span class="badge" id="origin-badge">内置示例</span>
+            </div>
+            <div class="actions">
+              <button
+                id="undo"
+                class="icon-button"
+                title="撤销"
+                aria-label="撤销"
+              >
+                ↶</button
+              ><button
+                id="redo"
+                class="icon-button"
+                title="重做"
+                aria-label="重做"
+              >
+                ↷</button
+              ><span class="action-divider"></span
+              ><button id="save-draft" class="small-button">保存草稿</button
+              ><button id="export" class="dark-button">
+                导出图片 <span>↗</span>
+              </button>
+            </div>
+          </div>
+          <div class="preview-info">
+            <span id="design-note">为一段慢生活随笔，留一点呼吸的空间。</span
+            ><button id="original-button" class="text-button">
+              查看原文 ↗
+            </button>
+          </div>
+          <div class="stage" id="stage">
+            <div class="paper-stack">
+              <div class="paper-shadow"></div>
+              <canvas
+                id="main-canvas"
+                width="750"
+                height="1000"
+                aria-label="当前图文页面"
+              ></canvas>
+            </div>
+            <div class="stage-caption">
+              <span class="dimension">3 : 4 · 750 × 1000</span
+              ><button id="download-page" class="text-button">
+                下载此页 ↓
+              </button>
+            </div>
+          </div>
+          <div class="page-strip">
+            <div id="thumbnails" class="thumbnails"></div>
+            <div class="page-controls">
+              <button
+                id="move-left"
+                class="icon-button"
+                title="前移一页"
+                aria-label="前移一页"
+              >
+                ←</button
+              ><button
+                id="move-right"
+                class="icon-button"
+                title="后移一页"
+                aria-label="后移一页"
+              >
+                →</button
+              ><button
+                id="delete-page"
+                class="icon-button"
+                title="删除此页"
+                aria-label="删除此页"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+          <div class="edit-bar">
+            <div>
+              <span class="pencil">✎</span
+              ><strong id="page-label">第 1 页</strong
+              ><span class="quiet">每一处，都可以是你的选择</span>
+            </div>
+            <button id="edit-toggle" class="small-button">
+              编辑这一页 <span>⌄</span>
+            </button>
+          </div>
+          <div id="editor" class="editor" hidden>
+            <div class="edit-fields">
+              <label>标题<input id="page-title" maxlength="120" /></label
+              ><label
+                >正文<textarea
+                  id="page-body"
+                  maxlength="12000"
+                  rows="4"
+                ></textarea></label
+              ><button id="apply-text" class="small-button">
+                应用文字修改
+              </button>
+            </div>
+            <div class="edit-design">
+              <label
+                >页面构图<select id="page-layout">
+                  <option value="hero">大图开篇</option>
+                  <option value="split">图文并置</option>
+                  <option value="editorial">文字叙事</option>
+                  <option value="poster">留白金句</option>
+                </select></label
+              ><button id="image-button" class="small-button">
+                搜索 / 生成配图</button
+              ><label class="small-button upload-label"
+                >上传自己的图片<input
+                  id="image-upload"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  hidden /></label
+              ><button id="remove-image" class="text-button">
+                恢复内置插画</button
+              ><label id="focal-label" hidden
+                >图片上下位置<input
+                  id="image-focal"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="50"
+              /></label>
+              <p id="image-credit" class="image-credit"></p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <footer>
+        <span
+          >InkMuse
+          <span class="footer-star">✳</span> 文字是你的，灵感也是。</span
+        ><span>Crafted by Baixue</span>
+      </footer>
+    </main>
+    <dialog id="image-dialog">
+      <div class="dialog-heading">
+        <div>
+          <div class="eyebrow">A PICTURE THAT BELONGS</div>
+          <h2>给文字，找一个画面。</h2>
+        </div>
+        <button class="icon-button" data-close="image-dialog" aria-label="关闭">
+          ×
+        </button>
+      </div>
+      <div class="dialog-tabs">
+        <button id="search-tab" class="active">搜索真实图片</button
+        ><button id="generation-tab">生成创意配图</button>
+      </div>
+      <form id="image-form">
+        <label class="sr-only" for="image-query">图片关键词或描述</label
+        ><input
+          id="image-query"
+          placeholder="描述你想要的画面，如：窗边的咖啡"
+        /><button class="dark-button" type="submit" id="image-submit">
+          搜索 ↗
+        </button>
+      </form>
+      <p class="dialog-note" id="image-note">
+        选择与你的内容相符的图片，来源会随作品一起保留。
+      </p>
+      <div id="image-results" class="image-results"></div>
+      <p id="image-status" role="status"></p>
+    </dialog>
+    <dialog id="draft-dialog">
+      <div class="dialog-heading">
+        <h2>我的草稿</h2>
+        <button class="icon-button" data-close="draft-dialog" aria-label="关闭">
+          ×
+        </button>
+      </div>
+      <p class="dialog-note">
+        草稿保存在这台设备的浏览器中。导出项目文件，可备份或继续编辑。
+      </p>
+      <div class="draft-actions">
+        <button id="export-json" class="small-button">导出项目文件 ↓</button
+        ><label class="small-button upload-label"
+          >导入项目文件<input
+            id="import-json"
+            type="file"
+            accept="application/json,.json"
+            hidden
+        /></label>
+      </div>
+      <div id="draft-list"></div>
+    </dialog>
+    <dialog id="original-dialog">
+      <div class="dialog-heading">
+        <h2>你的原文</h2>
+        <button
+          class="icon-button"
+          data-close="original-dialog"
+          aria-label="关闭"
+        >
+          ×
+        </button>
+      </div>
+      <pre id="original-text"></pre>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <script src="core/design.js"></script>
+    <script src="vendor/jszip.min.js"></script>
+    <script src="runtime.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

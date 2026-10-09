@@ -1,0 +1,251 @@
+.screen {
+  padding: 32rpx;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+.logo {
+  font:
+    italic 52rpx Georgia,
+    serif;
+  letter-spacing: -2rpx;
+}
+.text-button {
+  background: none;
+  color: #829074;
+  font-size: 23rpx;
+  padding: 0 12rpx;
+  margin: 0;
+}
+.eyebrow {
+  font-size: 16rpx;
+  color: #89937e;
+  letter-spacing: 3rpx;
+}
+.headline {
+  font-size: 43rpx;
+  margin-top: 20rpx;
+  letter-spacing: 1rpx;
+}
+.subtitle {
+  font-size: 23rpx;
+  color: #989d8b;
+  margin: 20rpx 0 34rpx;
+}
+.panel {
+  background: #fffefa;
+  border: 1rpx solid #e5e7dc;
+  border-radius: 22rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 25rpx;
+  font-weight: 500;
+  gap: 12rpx;
+}
+.counter {
+  font-size: 18rpx;
+  font-weight: 400;
+  color: #9b9f8e;
+}
+.source {
+  margin: 26rpx 0 18rpx;
+  width: 100%;
+  height: 310rpx;
+  background: #f8f9f2;
+  border: 1rpx solid #e4e7db;
+  border-radius: 12rpx;
+  font-size: 24rpx;
+  line-height: 1.9;
+  padding: 22rpx;
+  color: #596250;
+}
+.samples {
+  display: flex;
+  gap: 10rpx;
+  align-items: center;
+  font-size: 18rpx;
+  color: #9ba18c;
+}
+.samples button {
+  background: #f4f5ed;
+  padding: 0 14rpx;
+  font-size: 18rpx;
+  margin: 0;
+}
+.spaced {
+  margin-top: 34rpx;
+  margin-bottom: 22rpx;
+}
+.moods {
+  white-space: nowrap;
+}
+.mood {
+  display: inline-block;
+  margin-right: 12rpx;
+  background: #f4f5ed;
+  font-size: 21rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #e2e5d7;
+  border-radius: 12rpx;
+}
+.mood.chosen {
+  background: #e8eedf;
+  border-color: #76896b;
+  color: #46603b;
+}
+.option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 23rpx;
+  margin: 22rpx 0;
+  color: #68735b;
+}
+.option switch {
+  transform: scale(0.7);
+  transform-origin: right center;
+}
+.primary {
+  background: #3f5945;
+  color: #fffcef;
+  border-radius: 12rpx;
+  font-size: 25rpx;
+  padding: 7rpx 0;
+  margin-top: 20rpx;
+}
+.status {
+  font-size: 22rpx;
+  color: #7a825f;
+  line-height: 1.8;
+  margin-top: 22rpx;
+  word-break: break-all;
+}
+.note {
+  font-size: 20rpx;
+  color: #939b85;
+  margin: 20rpx 0;
+  line-height: 1.8;
+}
+.art {
+  width: 100%;
+  height: 800rpx;
+  background: #f2eddf;
+  box-shadow: 0 10rpx 35rpx #343c2515;
+}
+.page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30rpx;
+  margin: 20rpx 0;
+  font-size: 20rpx;
+  color: #879377;
+}
+.page-nav button {
+  margin: 0;
+  background: none;
+  color: #65785b;
+}
+.toolbar {
+  display: flex;
+  gap: 12rpx;
+  margin: 16rpx 0;
+}
+.toolbar button {
+  flex: 1;
+  margin: 0;
+  padding: 0 8rpx;
+  font-size: 21rpx;
+  background: #f0f3e8;
+  color: #5b6c4e;
+  border-radius: 9rpx;
+}
+.editor {
+  border-top: 1rpx solid #e7e9df;
+  padding-top: 20rpx;
+  margin-top: 20rpx;
+}
+.field-label {
+  font-size: 20rpx;
+  color: #8e9980;
+  display: block;
+  margin: 16rpx 0 10rpx;
+}
+.field {
+  width: 100%;
+  font-size: 23rpx;
+  background: #f5f7ee;
+  padding: 18rpx;
+  border: 1rpx solid #e1e6d5;
+  border-radius: 9rpx;
+  margin: 16rpx 0;
+  min-height: 76rpx;
+}
+.body {
+  height: 240rpx;
+  line-height: 1.8;
+}
+.apply {
+  font-size: 22rpx;
+  background: #e9efdf;
+  color: #53664b;
+  margin: 20rpx 0;
+}
+.credit {
+  font-size: 18rpx;
+  color: #8c977d;
+  line-height: 1.7;
+  word-break: break-all;
+}
+.footer {
+  text-align: center;
+  color: #9ba38c;
+  font-size: 19rpx;
+  padding: 15rpx 0 30rpx;
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #26392c80;
+  display: flex;
+  align-items: flex-end;
+  z-index: 10;
+}
+.sheet {
+  background: #fffefa;
+  border-radius: 28rpx 28rpx 0 0;
+  width: 100%;
+  padding: 35rpx;
+  max-height: 88vh;
+  box-sizing: border-box;
+}
+.results {
+  max-height: 46vh;
+}
+.result {
+  display: flex;
+  gap: 18rpx;
+  margin: 18rpx 0;
+  padding: 12rpx;
+  background: #f4f6ec;
+  border-radius: 12rpx;
+}
+.result image {
+  width: 180rpx;
+  height: 145rpx;
+  flex-shrink: 0;
+  border-radius: 7rpx;
+}
+.result-info {
+  font-size: 20rpx;
+  line-height: 1.6;
+  word-break: break-all;
+}

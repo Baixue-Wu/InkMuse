@@ -1,0 +1,11 @@
+{
+  "pages": ["pages/studio/studio"],
+  "window": {
+    "navigationBarTitleText": "InkMuse",
+    "navigationBarBackgroundColor": "#f7f6f1",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f6f1"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
